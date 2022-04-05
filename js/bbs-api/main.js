@@ -1,11 +1,16 @@
 'use strict';
 
 const p = console.log;
-const host = 'http://18.179.200.206:20780/';
+const host = 'http://18.179.200.206:20780';
 
 registerSubmit.onclick = () => {
-  fetch(host + '/register');
-  alert('押された');
+  const url = host + '/register';
+  const data = {
+    name: 'a',
+    bio: 'a',
+    password: 'a',
+  };
+  postDataRegister(url, data).then(p).catch(p);
 };
 //以下にコードを書きましょう。
 /*
@@ -32,6 +37,20 @@ async function postData(url = '', data = {}) {
   return response.json(); // JSON のレスポンスをネイティブの JavaScript オブジェクトに解釈
 }
 
+/*
 postData('https://example.com/answer', { answer: 42 }).then((data) => {
   console.log(data); // `data.json()` の呼び出しで解釈された JSON データ
 });
+*/
+
+async function postDataRegister(url = '', data = {}) {
+  // 既定のオプションには * が付いています
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data), // 本文のデータ型は "Content-Type" ヘッダーと一致させる必要があります
+  });
+  return response.json(); // JSON のレスポンスをネイティブの JavaScript オブジェクトに解釈
+}
